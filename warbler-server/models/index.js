@@ -8,3 +8,4 @@ mongoose.connect(process.env.DB_CONNECTION, {
 });
 
 module.exports.User = require("./user");
+module.exports.User = require("./message");
