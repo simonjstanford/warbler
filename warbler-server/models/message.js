@@ -1,22 +1,27 @@
 const mongoose = require("mongoose");
 const user = require("./user");
 
-const messageSchema = new mongoose.Schema({
-    text: {
-        type: String,
-        required: true,
-        maxlength: 160
+const messageSchema = new mongoose.Schema(
+    {
+        text: {
+            type: String,
+            required: true,
+            maxlength: 160
+        },
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        }
     },
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+    {
+        timestamps: true
     }
-});
+);
 
 messageSchema.pre("remove", async function(next) {
     try {
         //find a user
-        let user = await user.findById(this.userId);
+        let user = await user.findById(this.user);
         //remove the id of the message
         user.message.remove(this.id);
         //save the user
