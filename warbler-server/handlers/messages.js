@@ -37,7 +37,7 @@ exports.getMessage = async function(req, res, next) {
 exports.deleteMessage = async function(req, res, next) {
     try {
         let message = await db.Message.findById(req.params.message_id);
-        await foundMessage.remove(); //call remove like this to ensure our pre-hook is fired
+        await message.remove(); //call remove like this to ensure our pre-hook is fired
         return res.status(200).json(message);
     } catch (error) {
         return next(error);
